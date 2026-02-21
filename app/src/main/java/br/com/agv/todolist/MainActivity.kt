@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.ui.Modifier
+import br.com.agv.todolist.navigation.TodoNavHost
 import br.com.agv.todolist.ui.theme.TodoListTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,9 +15,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TodoListTheme {
-
-            }
+            Box(
+                modifier = Modifier
+                    .safeDrawingPadding(),
+                content = {
+                    TodoListTheme {
+                        TodoNavHost()
+                    }
+                }
+            )
         }
     }
 }

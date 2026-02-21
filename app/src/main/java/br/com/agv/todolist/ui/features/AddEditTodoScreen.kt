@@ -1,8 +1,6 @@
 package br.com.agv.todolist.ui.features
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,17 +17,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.room.util.TableInfo
 import br.com.agv.myapplication.R
 import br.com.agv.todolist.ui.theme.TodoListTheme
 
 @Composable
-fun AddEditTodoScreen() {
-
+fun AddEditTodoScreen(id: Long? = null) {
+    AddEditTodoContent()
 }
 
 @Composable
-fun AddEditTodoContent(modifier: Modifier = Modifier) {
+fun AddEditTodoContent(
+    id: Long? = null
+) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
