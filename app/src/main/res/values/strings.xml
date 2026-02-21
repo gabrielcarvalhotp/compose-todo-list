@@ -2,4 +2,6 @@
     <string name="app_name">TodoList</string>
     <string name="add">Adicionar</string>
     <string name="delete">Deletar</string>
+    <string name="title">Titulo</string>
+    <string name="description">Descrição</string>
 </resources>
