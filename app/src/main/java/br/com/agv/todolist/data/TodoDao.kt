@@ -12,11 +12,11 @@ interface TodoDao {
     fun getAll(): Flow<List<TodoEntity>>
 
     @Query("SELECT * FROM todos WHERE id = :id")
-    fun getById(id: Long): TodoEntity
+    suspend fun getById(id: Long): TodoEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(todo: TodoEntity)
+    suspend fun save(todo: TodoEntity)
 
     @Query("DELETE FROM todos WHERE id = :id")
-    fun deleteById(id: Long)
+    suspend fun deleteById(id: Long)
 }

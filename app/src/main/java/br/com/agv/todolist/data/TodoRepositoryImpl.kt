@@ -10,7 +10,6 @@ class TodoRepositoryImpl(
 
     override suspend fun insert(title: String, description: String?) {
         val entity = TodoEntity(
-            id = 0,
             title = title,
             description = description,
             isCompleted = false
