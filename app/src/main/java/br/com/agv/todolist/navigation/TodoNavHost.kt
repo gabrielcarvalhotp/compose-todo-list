@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import br.com.agv.todolist.ui.features.addedittodo.AddEditTodoScreen
-import br.com.agv.todolist.ui.features.ListTodoScreen
+import br.com.agv.todolist.ui.features.listtodo.ListTodoScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,6 +31,7 @@ fun TodoNavHost() {
         composable<AddEditTodo> { backStackEntry ->
             val id = backStackEntry.toRoute<AddEditTodo>().id
             AddEditTodoScreen(
+                id = id,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

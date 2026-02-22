@@ -8,8 +8,8 @@ import br.com.agv.todolist.domain.Todo
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val title: String,
-    val description: String?,
+    var title: String,
+    var description: String?,
     var isCompleted: Boolean
 )
 

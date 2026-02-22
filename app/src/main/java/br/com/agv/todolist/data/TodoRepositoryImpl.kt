@@ -8,8 +8,13 @@ class TodoRepositoryImpl(
     private val todoDao: TodoDao
 ): TodoRepository {
 
-    override suspend fun insert(title: String, description: String?) {
-        val entity = TodoEntity(
+    override suspend fun save(id: Long?, title: String, description: String?) {
+        val entity = id?.let { id ->
+            todoDao.getById(id).copy(
+                title = title,
+                description = description
+            )
+        } ?: TodoEntity(
             title = title,
             description = description,
             isCompleted = false

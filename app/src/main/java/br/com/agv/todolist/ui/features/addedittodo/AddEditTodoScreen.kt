@@ -32,6 +32,7 @@ import br.com.agv.todolist.ui.theme.TodoListTheme
 
 @Composable
 fun AddEditTodoScreen(
+    id: Long?,
     onNavigateBack: () -> Unit
 ) {
     val context = LocalContext.current.applicationContext
@@ -41,7 +42,10 @@ fun AddEditTodoScreen(
     )
 
     val viewModel = viewModel<AddEditTodoViewModel> {
-        AddEditTodoViewModel(repository)
+        AddEditTodoViewModel(
+            id = id,
+            repository = repository
+        )
     }
 
     val title = viewModel.title
@@ -60,6 +64,7 @@ fun AddEditTodoScreen(
     }
 
     AddEditTodoContent(
+        id = id,
         title = title,
         description = description,
         onEvent = viewModel::onEvent,
@@ -69,6 +74,7 @@ fun AddEditTodoScreen(
 
 @Composable
 fun AddEditTodoContent(
+    id: Long?,
     title: String = "",
     description: String? = null,
     onEvent: (AddEditTodoEvent) -> Unit = {},
@@ -115,6 +121,8 @@ fun AddEditTodoContent(
 @Composable
 private fun AddEditTodoContentPreview() {
     TodoListTheme {
-        AddEditTodoContent()
+        AddEditTodoContent(
+            id = null
+        )
     }
 }

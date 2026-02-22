@@ -4,7 +4,7 @@ import br.com.agv.todolist.domain.Todo
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
-    suspend fun insert(title: String, description: String?)
+    suspend fun save(id: Long?, title: String, description: String?)
 
     suspend fun updateCompleted(id: Long, isCompleted: Boolean)
 
