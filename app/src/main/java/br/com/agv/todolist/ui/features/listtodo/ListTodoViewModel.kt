@@ -3,7 +3,7 @@ package br.com.agv.todolist.ui.features.listtodo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.agv.todolist.data.TodoRepository
-import br.com.agv.todolist.navigation.AddEditTodo
+import br.com.agv.todolist.navigation.AddEditTodoRoute
 import br.com.agv.todolist.ui.UIEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,34 +26,31 @@ class ListTodoViewModel(
 
     fun onEvent(event: ListTodoEvent) {
         when (event) {
-            is ListTodoEvent.CompleteTodo -> {
-                completeTodo(event.todoId, event.isCompleted)
+            is ListTodoEvent.CompleteChanged -> {
+                completeTodo(event.id, event.isCompleted)
             }
-            is ListTodoEvent.DeleteTodo -> {
-                deleteTodo(event.todoId)
+            is ListTodoEvent.Delete -> {
+                deleteTodo(event.id)
             }
-            is ListTodoEvent.AddEditTodo -> {
+            is ListTodoEvent.AddEdit -> {
                 viewModelScope.launch {
                     _uiEvent.send(
-                        UIEvent.Navigate(AddEditTodo(event.todoId))
+                        UIEvent.Navigate(AddEditTodoRoute(event.id))
                     )
                 }
             }
         }
     }
 
-    private fun completeTodo(todoId: Long, isCompleted: Boolean) {
+    private fun completeTodo(id: Long, isCompleted: Boolean) {
         viewModelScope.launch {
-            repository.updateCompleted(todoId, isCompleted)
+            repository.updateCompleted(id, isCompleted)
         }
     }
 
-    private fun deleteTodo(todoId: Long) {
+    private fun deleteTodo(id: Long) {
         viewModelScope.launch {
-            repository.delete(todoId)
+            repository.delete(id)
         }
     }
-
-
-
 }

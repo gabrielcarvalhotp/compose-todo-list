@@ -27,11 +27,9 @@ import br.com.agv.todolist.domain.Todo
 import br.com.agv.todolist.domain.todo1
 import br.com.agv.todolist.domain.todo2
 import br.com.agv.todolist.domain.todo3
-import br.com.agv.todolist.navigation.AddEditTodo
+import br.com.agv.todolist.navigation.AddEditTodoRoute
 import br.com.agv.todolist.ui.UIEvent
-import br.com.agv.todolist.ui.components.TodoItem
-import br.com.agv.todolist.ui.features.addedittodo.AddEditTodoEvent
-import br.com.agv.todolist.ui.features.addedittodo.AddEditTodoViewModel
+import br.com.agv.todolist.ui.components.TodoCard
 import br.com.agv.todolist.ui.theme.TodoListTheme
 
 @Composable
@@ -54,7 +52,7 @@ fun ListTodoScreen(
         viewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
                 is UIEvent.Navigate<*> -> {
-                    if (uiEvent.route is AddEditTodo) {
+                    if (uiEvent.route is AddEditTodoRoute) {
                         onNavigateToAddOrEditTodo(uiEvent.route.id)
                     }
                 }
@@ -81,7 +79,7 @@ fun ListTodoContent(
 ) {
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { onEvent(ListTodoEvent.AddEditTodo(null)) }) {
+            FloatingActionButton(onClick = { onEvent(ListTodoEvent.AddEdit(null)) }) {
                 Icon(
                     painterResource(R.drawable.ic_add_24px),
                     contentDescription = stringResource(R.string.add)
@@ -94,13 +92,13 @@ fun ListTodoContent(
             contentPadding = PaddingValues(16.dp)
         ) {
             itemsIndexed(todos) { index, todo ->
-                TodoItem(
+                TodoCard(
                     todo = todo,
                     onCompletedChange = { isChecked ->
-                        onEvent(ListTodoEvent.CompleteTodo(todo.id, isChecked))
+                        onEvent(ListTodoEvent.CompleteChanged(todo.id, isChecked))
                     },
-                        onDelete = { onEvent(ListTodoEvent.DeleteTodo(todo.id)) },
-                        onItemClick = { onEvent(ListTodoEvent.AddEditTodo(todo.id)) },
+                        onDelete = { onEvent(ListTodoEvent.Delete(todo.id)) },
+                        onItemClick = { onEvent(ListTodoEvent.AddEdit(todo.id)) },
                     )
 
                 if (index < todos.lastIndex) {

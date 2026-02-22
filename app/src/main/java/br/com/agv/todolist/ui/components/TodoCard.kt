@@ -25,7 +25,7 @@ import br.com.agv.todolist.domain.todo1
 import br.com.agv.todolist.domain.todo3
 
 @Composable
-fun TodoItem(
+fun TodoCard(
     todo: Todo,
     onCompletedChange: (Boolean) -> Unit,
     onDelete: () -> Unit,
@@ -85,12 +85,12 @@ fun TodoItem(
 
 @Preview
 @Composable
-private fun TodoItemPreview() {
-    TodoItem(todo1, {}, {}, {})
+private fun TodoCardPreview() {
+    TodoCard(todo1, {}, {}, {})
 }
 
 @Preview
 @Composable
-private fun TodoItemPreviewCompleted() {
-    TodoItem(todo3, {}, {}, {})
+private fun TodoCardPreviewCompleted() {
+    TodoCard(todo3, {}, {}, {})
 }

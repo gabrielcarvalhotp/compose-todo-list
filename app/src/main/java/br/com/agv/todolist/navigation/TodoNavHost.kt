@@ -10,26 +10,26 @@ import br.com.agv.todolist.ui.features.listtodo.ListTodoScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object TodoList
+object TodoListRoute
 
 @Serializable
-data class AddEditTodo(var id: Long? = null) {
+data class AddEditTodoRoute(var id: Long? = null) {
 }
 
 @Composable
 fun TodoNavHost() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = TodoList) {
-        composable<TodoList> {
+    NavHost(navController = navController, startDestination = TodoListRoute) {
+        composable<TodoListRoute> {
             ListTodoScreen(
                 onNavigateToAddOrEditTodo = { id ->
-                    navController.navigate(route = AddEditTodo(id = id))
+                    navController.navigate(route = AddEditTodoRoute(id = id))
                 }
             )
         }
-        composable<AddEditTodo> { backStackEntry ->
-            val id = backStackEntry.toRoute<AddEditTodo>().id
+        composable<AddEditTodoRoute> { backStackEntry ->
+            val id = backStackEntry.toRoute<AddEditTodoRoute>().id
             AddEditTodoScreen(
                 id = id,
                 onNavigateBack = { navController.popBackStack() }
