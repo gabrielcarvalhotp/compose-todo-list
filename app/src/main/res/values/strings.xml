@@ -4,4 +4,5 @@
     <string name="delete">Deletar</string>
     <string name="title">Titulo</string>
     <string name="description">Descrição</string>
+    <string name="title_cannot_be_empty">O titulo não pode ser vazio</string>
 </resources>

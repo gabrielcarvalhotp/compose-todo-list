@@ -10,8 +10,13 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,10 +27,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.agv.myapplication.R
 import br.com.agv.todolist.data.TodoDatabaseProvider
 import br.com.agv.todolist.data.TodoRepositoryImpl
+import br.com.agv.todolist.ui.UIEvent
 import br.com.agv.todolist.ui.theme.TodoListTheme
 
 @Composable
-fun AddEditTodoScreen() {
+fun AddEditTodoScreen(
+    onNavigateBack: () -> Unit
+) {
     val context = LocalContext.current.applicationContext
     val database = TodoDatabaseProvider.provide(context)
     val repository = TodoRepositoryImpl(
@@ -39,10 +47,23 @@ fun AddEditTodoScreen() {
     val title = viewModel.title
     val description = viewModel.description
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UIEvent.ShowSnackbar -> snackbarHostState.showSnackbar(uiEvent.message)
+                UIEvent.NavigateBack -> onNavigateBack()
+                is UIEvent.Navigate<*> -> { }
+            }
+        }
+    }
+
     AddEditTodoContent(
         title = title,
         description = description,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        snackbarHostState = snackbarHostState
     )
 }
 
@@ -50,9 +71,13 @@ fun AddEditTodoScreen() {
 fun AddEditTodoContent(
     title: String = "",
     description: String? = null,
-    onEvent: (AddEditTodoEvent) -> Unit = {}
+    onEvent: (AddEditTodoEvent) -> Unit = {},
+    snackbarHostState: SnackbarHostState = SnackbarHostState()
 ) {
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { onEvent(AddEditTodoEvent.Save) }) {
                 Icon(

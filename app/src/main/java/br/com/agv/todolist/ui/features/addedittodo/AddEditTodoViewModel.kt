@@ -3,8 +3,10 @@ package br.com.agv.todolist.ui.features.addedittodo
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.agv.myapplication.R
 import br.com.agv.todolist.data.TodoRepository
 import br.com.agv.todolist.ui.UIEvent
 import kotlinx.coroutines.channels.Channel
@@ -45,6 +47,7 @@ class AddEditTodoViewModel(
                 return@launch
             }
             repository.insert(title, description)
+            _uiEvent.send(UIEvent.NavigateBack)
         }
     }
 }
