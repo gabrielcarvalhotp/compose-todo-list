@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Database(
     entities = [TodoEntity::class],
@@ -12,7 +15,6 @@ import androidx.room.RoomDatabase
 abstract class TodoDatabase: RoomDatabase() {
     abstract val todoDao: TodoDao
 }
-
 object TodoDatabaseProvider {
     @Volatile
     private var INSTANCE: TodoDatabase? = null

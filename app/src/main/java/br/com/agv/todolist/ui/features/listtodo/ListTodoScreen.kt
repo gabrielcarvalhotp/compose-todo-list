@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.agv.myapplication.R
 import br.com.agv.todolist.data.TodoDatabaseProvider
@@ -36,15 +37,7 @@ import br.com.agv.todolist.ui.theme.TodoListTheme
 fun ListTodoScreen(
     onNavigateToAddOrEditTodo: (Long?) -> Unit
 ) {
-    val context = LocalContext.current.applicationContext
-    val database = TodoDatabaseProvider.provide(context)
-    val repository = TodoRepositoryImpl(
-        todoDao = database.todoDao
-    )
-
-    val viewModel = viewModel<ListTodoViewModel> {
-        ListTodoViewModel(repository)
-    }
+    val viewModel = hiltViewModel<ListTodoViewModel>()
 
     val todos by viewModel.todos.collectAsState()
 

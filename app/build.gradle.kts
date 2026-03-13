@@ -67,6 +67,9 @@ dependencies {
     // Dagger Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.lifecycle.viewmodel)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

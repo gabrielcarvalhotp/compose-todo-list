@@ -4,19 +4,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import br.com.agv.myapplication.R
 import br.com.agv.todolist.data.TodoRepository
+import br.com.agv.todolist.navigation.AddEditTodoRoute
 import br.com.agv.todolist.ui.UIEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddEditTodoViewModel(
-    private val id: Long?,
-    private val repository: TodoRepository
+@HiltViewModel
+class AddEditTodoViewModel @Inject constructor(
+    private val repository: TodoRepository,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
+    private val route = savedStateHandle.toRoute<AddEditTodoRoute>()
+    private val id: Long? = route.id
 
     var title by mutableStateOf("")
         private set

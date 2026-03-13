@@ -5,13 +5,16 @@ import androidx.lifecycle.viewModelScope
 import br.com.agv.todolist.data.TodoRepository
 import br.com.agv.todolist.navigation.AddEditTodoRoute
 import br.com.agv.todolist.ui.UIEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListTodoViewModel(
+@HiltViewModel
+class ListTodoViewModel @Inject constructor(
     private val repository: TodoRepository
 ): ViewModel() {
     val todos = repository.getAll()

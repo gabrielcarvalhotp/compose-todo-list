@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.agv.myapplication.R
 import br.com.agv.todolist.data.TodoDatabaseProvider
@@ -32,22 +33,9 @@ import br.com.agv.todolist.ui.theme.TodoListTheme
 
 @Composable
 fun AddEditTodoScreen(
-    id: Long?,
-    onNavigateBack: () -> Unit
+    viewModel: AddEditTodoViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
 ) {
-    val context = LocalContext.current.applicationContext
-    val database = TodoDatabaseProvider.provide(context)
-    val repository = TodoRepositoryImpl(
-        todoDao = database.todoDao
-    )
-
-    val viewModel = viewModel<AddEditTodoViewModel> {
-        AddEditTodoViewModel(
-            id = id,
-            repository = repository
-        )
-    }
-
     val title = viewModel.title
     val description = viewModel.description
 
@@ -64,7 +52,6 @@ fun AddEditTodoScreen(
     }
 
     AddEditTodoContent(
-        id = id,
         title = title,
         description = description,
         onEvent = viewModel::onEvent,
@@ -74,7 +61,6 @@ fun AddEditTodoScreen(
 
 @Composable
 fun AddEditTodoContent(
-    id: Long?,
     title: String = "",
     description: String? = null,
     onEvent: (AddEditTodoEvent) -> Unit = {},
@@ -121,8 +107,6 @@ fun AddEditTodoContent(
 @Composable
 private fun AddEditTodoContentPreview() {
     TodoListTheme {
-        AddEditTodoContent(
-            id = null
-        )
+        AddEditTodoContent()
     }
 }
